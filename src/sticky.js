@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 export default class Sticky extends React.Component {
 
   static propTypes = {
-    containerElement: React.PropTypes.string,
-    placeholderElement: React.PropTypes.string,
-    childrenElement: React.PropTypes.string,
+    containerElement: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.func]),
+    placeholderElement: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.func]),
+    childrenElement: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.func]),
     isActive: React.PropTypes.bool,
     className: React.PropTypes.string,
     style: React.PropTypes.object,
