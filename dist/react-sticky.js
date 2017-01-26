@@ -156,6 +156,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -215,11 +217,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        this.props,
-	        this.props.children
-	      );
+	      var _props = this.props,
+	          element = _props.element,
+	          children = _props.children,
+	          props = _objectWithoutProperties(_props, ['element', 'children']);
+
+	      return _react2.default.createElement(element, props, children);
 	    }
 	  }]);
 
@@ -231,6 +234,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	Container.childContextTypes = {
 	  'sticky-channel': _react2.default.PropTypes.any
+	};
+	Container.propTypes = {
+	  element: _react2.default.PropTypes.string
 	};
 	exports.default = Container;
 	module.exports = exports['default'];
@@ -454,24 +460,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      var _props = this.props,
+	          containerElement = _props.containerElement,
+	          placeholderElement = _props.placeholderElement,
+	          childrenElement = _props.childrenElement,
 	          topOffset = _props.topOffset,
 	          isActive = _props.isActive,
 	          stickyClassName = _props.stickyClassName,
 	          stickyStyle = _props.stickyStyle,
 	          bottomOffset = _props.bottomOffset,
 	          onStickyStateChange = _props.onStickyStateChange,
-	          props = _objectWithoutProperties(_props, ['topOffset', 'isActive', 'stickyClassName', 'stickyStyle', 'bottomOffset', 'onStickyStateChange']);
+	          props = _objectWithoutProperties(_props, ['containerElement', 'placeholderElement', 'childrenElement', 'topOffset', 'isActive', 'stickyClassName', 'stickyStyle', 'bottomOffset', 'onStickyStateChange']);
 
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('div', { ref: 'placeholder', style: placeholderStyle }),
-	        _react2.default.createElement(
-	          'div',
-	          _extends({}, props, { ref: 'children', className: className, style: style }),
-	          this.props.children
-	        )
-	      );
+	      return _react2.default.createElement(containerElement, null, _react2.default.createElement(placeholderElement, {
+	        ref: 'placeholder',
+	        style: placeholderStyle
+	      }), _react2.default.createElement(childrenElement, _extends({}, props, {
+	        ref: 'children',
+	        className: className,
+	        style: style
+	      }), this.props.children));
 	    }
 	  }]);
 
@@ -479,6 +486,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react2.default.Component);
 
 	Sticky.propTypes = {
+	  containerElement: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.func]),
+	  placeholderElement: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.func]),
+	  childrenElement: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.func]),
 	  isActive: _react2.default.PropTypes.bool,
 	  className: _react2.default.PropTypes.string,
 	  style: _react2.default.PropTypes.object,
@@ -489,6 +499,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onStickyStateChange: _react2.default.PropTypes.func
 	};
 	Sticky.defaultProps = {
+	  containerElement: 'div',
+	  placeholderElement: 'div',
+	  childrenElement: 'div',
 	  isActive: true,
 	  className: '',
 	  style: {},
